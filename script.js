@@ -39,3 +39,7 @@ if (dist < effectiveDistance) {
   ctx.lineWidth = 0.2;
   ctx.stroke();
 }
+
+
+document.getElementById('yourIframeId').contentWindow.postMessage({ background: '#fff' }, '*');
+
