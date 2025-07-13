@@ -40,6 +40,3 @@ if (dist < effectiveDistance) {
   ctx.stroke();
 }
 
-
-document.getElementById('yourIframeId').contentWindow.postMessage({ background: '#fff' }, '*');
-
