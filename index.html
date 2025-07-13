@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvasランダムドット出現</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="dotCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById('dotCanvas');
+  const ctx = canvas.getContext('2d');
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  const dots = [];
+  const dotCount = 24;
+
+  function createDot() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 3 + 2,
+      life: Math.random() * 3000 + 1000, // 1~4秒の寿命
+      born: Date.now()
+    };
+  }
+
+  function spawnDot() {
+    if (dots.length < dotCount) {
+      dots.push(createDot());
+    }
+    setTimeout(spawnDot, Math.random() * 300 + 100); // 100ms~400ms毎に新ドット
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+    const now = Date.now();
+    for (let i = dots.length - 1; i >= 0; i--) {
+      const dot = dots[i];
+      const age = now - dot.born;
+
+      // ドットの透明度を寿命に応じて変化
+      const opacity = 1 - age / dot.life;
+
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      ctx.fill();
+
+      if (age > dot.life) {
+        dots.splice(i, 1); // 寿命過ぎたら削除
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  spawnDot();
+  draw();
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
