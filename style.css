@@ -3,6 +3,6 @@ html, body {
   padding: 0;
   overflow: hidden;
   height: 100vh;
-  background: #fff;  /* または好きな色 */
+  background: transparent;  /* または好きな色 */
   width: 100vw;
 }
